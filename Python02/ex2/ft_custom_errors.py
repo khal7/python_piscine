@@ -11,29 +11,48 @@ class WaterError(GardenError):
     pass
 
 
-def plant():
-    try:
-        raise PlantError("The tomato plant is wilting!")
-    except PlantError as e:
-        print("Caught PlantError:", e)
+def plant(plant: str, last_watering: int) -> None:
+    if last_watering > 3:
+        raise PlantError(f"The {plant} plant is wilting!")
 
 
-def water():
-    try:
+def water(tank_volume: int) -> None:
+    if tank_volume < 10:
         raise WaterError("Not enough water in the tank!")
+
+
+def all_errors() -> None:
+    print("\nTesting catching all garden errors...")
+    i = 0
+    for _ in (None, None):
+        if i == 0:
+            try:
+                plant("tomato", 4)
+            except GardenError as e:
+                print(f"Caught a garden error: {e}")
+        elif i == 1:
+            try:
+                water(1)
+            except GardenError as e:
+                print(f"Caught a garden error: {e}")
+        i += 1
+
+
+if __name__ == "__main__":
+    print("=== Custom Garden Errors Demo ===")
+    print("\ntesting PlantError...")
+    try:
+        plant("tomato", 4)
+    except PlantError as e:
+        print(f"Caught PlantError {e}")
+    else:
+        print("plant is fine")
+
+    print("\nTesting WaterError...")
+    try:
+        water(9)
     except WaterError as e:
-        print("Caught WaterError:", e)
+        print(f"Caught WaterError {e}")
 
-
-print("=== Custom Garden Errors Demo ===\n")
-print("Testing PlantError...")
-plant()
-print("Testing WaterError...")
-water()
-print("Testing catching all garden errors...")
-try:
-    plant()
-    water()
-except GardenError as e:
-    print("Caught a garden error:", e)
-print("All custom error types work correctly!")
+    all_errors()
+    print("\nAll custom error types work correctly!")

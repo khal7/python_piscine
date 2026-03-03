@@ -1,47 +1,48 @@
 #!/usr/bin/env python3
 
-
-def garden_operations(s):
+def garden_operations() -> None:
 
     try:
-        value = int(s)
-        value
+        print("Testing ValueError...")
+        x = int("abc")
+        x
     except ValueError:
-        print("Caught ValueError: invalid literal for int()")
-
+        print("Caught ValueError: invalid literal for int()\n")
     try:
-        v = int(s)
-        v /= 0
-    except ZeroDivisionError:
-        print("Caught ZeroDivisionError: division by zero")
-
+        print("Testing ZeroDivisionError...")
+        print(10 / 0)
+    except ZeroDivisionError as e:
+        print(f"Caught ZeroDivisionError: {e}\n")
     try:
-        file = open("txt.txt", "r")
-        file.close()
+        print("Testing FileNotFoundError...")
+        f = open("missing.txt", 'r')
+        f.close()
     except FileNotFoundError:
-        print("Caught FileNotFoundError: No such file 'txt.txt'")
+        print("Caught FileNotFoundError: No such file 'missing.txt'\n")
+    try:
+        print("Testing KeyError...")
+        dict = {"rose": 1}
+        print(dict["missing_plant"])
+    except KeyError as e:
+        print(f"Caught KeyError: {e}\n")
+
+
+def test_error_types() -> None:
+
+    print("=== Garden Error Types Demo ===\n")
+    garden_operations()
 
     try:
-        something = {"plant": "rose"}
-        something[s]
-    except KeyError:
-        print(f"Caught KeyError: '{s}'")
-
-    print("Caught an error, but program continues!")
-
-
-def test_error_types():
-    print("Testing ValueError...")
-    garden_operations("32")
-
-    print("Testing ZeroDivisionError...")
-    garden_operations("37")
-
-    print("Testing FileNotFoundError...")
-    # garden_operations("test.txt")
-
-    print("Testing KeyError...")
-    garden_operations("Tomato")
+        print("Testing multiple errors together...")
+        x = int("34")
+        x
+        print(10 / 0)
+        f = open("missing.txt", 'r')
+        f.close()
+    except (ValueError, ZeroDivisionError, FileExistsError, KeyError):
+        print("Caught an error, but program continues!")
+    print("\nAll error types tested successfully!")
 
 
-test_error_types()
+if __name__ == "__main__":
+    test_error_types()
