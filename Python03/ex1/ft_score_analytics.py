@@ -3,7 +3,7 @@ import sys
 print("=== Player Score Analytics ===")
 
 
-def fun():
+def fun() -> None:
     if len(sys.argv) == 1:
         print(
             "No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
@@ -18,8 +18,9 @@ def fun():
             print(f"oops, I typed {arg} instead of 1000")
             return
     print(f"Scores processed: {my_list}")
-    print(f"Total players: {len(my_list) - 1}")
+    print(f"Total players: {len(my_list)}")
     print(f"Total score: {sum(my_list)}")
+    print(f"Average score: {sum(my_list) / len(my_list)}")
     print(f"High score: {max(my_list)}")
     print(f"Low score: {min(my_list)}")
     print(f"Score range: {max(my_list) - min(my_list)}")

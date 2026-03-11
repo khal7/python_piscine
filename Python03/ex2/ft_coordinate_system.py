@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
+
 import sys
 import math
 
 
-def fun(positions) -> None:
-    # (x1, y1, z1)
+def fun(positions: tuple | str) -> None:
     starting = (0, 0, 0)
     x1, y1, z1 = starting
 
@@ -33,24 +34,24 @@ def fun(positions) -> None:
 #    print(positions)
     result = math.sqrt((x - x1) ** 2 + (y - y1) ** 2 + (z - z1 ** 2))
     print(f"Distance between {starting} and {positions}: {result:.2f}\n")
-    print("Unpacking demonstration:")
-    print(f"Player at x={x}, y={y}, z={z}")
-    print(f"Coordinates: X={x1}, Y={y1}, Z={z1}\n")
 
 
 def testing() -> None:
     print("=== Game Coordinate System ===\n")
-    # Coordinations with tuple
+
     tup = (10, 20, 5)
     fun(tup)
 
-    # # Coordinations with a valid string needs parsing
     string_cordinations = "3,4,0"
     fun(string_cordinations)
 
-    # # Invalid coordinations
     Invalid_coordinations = "abc,def,ghi"
     fun(Invalid_coordinations)
+
+    x, y, z = tup1 = (3, 4, 0)
+    print("\nUnpacking demonstration:")
+    print(f"Player at x={x}, y={y}, z={z}")
+    print(f"Coordinates: X={x}, Y={y}, Z={z}")
 
 
 if __name__ == "__main__":

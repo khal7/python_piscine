@@ -39,7 +39,7 @@ def test_error_types() -> None:
         print(10 / 0)
         f = open("missing.txt", 'r')
         f.close()
-    except (ValueError, ZeroDivisionError, FileExistsError, KeyError):
+    except (ValueError, ZeroDivisionError, FileNotFoundError, KeyError):
         print("Caught an error, but program continues!")
     print("\nAll error types tested successfully!")
 

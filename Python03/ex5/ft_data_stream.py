@@ -84,4 +84,4 @@ if __name__ == "__main__":
 
     print("\n=== Generator Demonstration ===")
     fibo(10)
-    prime(10)
+    prime(5)

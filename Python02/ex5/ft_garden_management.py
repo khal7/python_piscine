@@ -20,7 +20,7 @@ class Plant:
 
 
 class GardenManager:
-    def __init__(self, tank_volume) -> None:
+    def __init__(self, tank_volume: int) -> None:
         self.tank_volume = tank_volume
         self.plants = []
 
