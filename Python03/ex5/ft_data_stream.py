@@ -2,13 +2,14 @@
 from typing import Generator
 
 
-def event_generator() -> Generator:
+def event_generator(n: int) -> Generator:
     players = ("alice", "bob", "charlie", "khalid")
     levels = (5, 12, 8, 1)
     action = ("killed monster", "found treasure",
               "levled up", "sniper")
-    for i in range(1, 1001):
-        yield i, players[(i - 1) % len(players)], levels[(i - 1) % len(players)], action[(i - 1) % 3]
+    for i in range(1, n + 1):
+        yield (i, players[(i - 1) % len(players)],
+               levels[(i - 1) % len(players)], action[(i - 1) % 3])
 
 
 def fibo_generator(n) -> Generator:
@@ -60,11 +61,11 @@ def prime(n):
 if __name__ == "__main__":
     # for n in even_generator():
     print("=== Game Data Stream Processor ===\n")
-    print("Processing 1000 game events...")
+    print("Processing 1000 game events...\n")
     high_level = 0
     treasure_event = 0
     lvl_up = 0
-    for i, name, lvl, action in event_generator():
+    for i, name, lvl, action in event_generator(1000):
         if lvl >= 10:
             high_level += 1
         if action == "found treasure":

@@ -9,7 +9,10 @@ def current_inventory(ft_dict: dict) -> None:
         for pair in pairs:
             if pair[1] > max_pair[1]:
                 max_pair = pair
-        percentage = (max_pair[1] / sum(ft_dict.values()) * 100)
+        try:
+            percentage = (max_pair[1] / sum(ft_dict.values()) * 100)
+        except TypeError as e:
+            print(e)
         if max_pair[1] == 1:
             print(
                 f"{max_pair[0]}, {max_pair[1]} unite ({percentage:.1f}%)")
@@ -84,10 +87,10 @@ def fun() -> None:
     print(f"Total items in inventory: {sum(my_dict.values())}")
     print(f"Unique item types: {len(my_dict.items())}")
 
-    print(f"\n=== Current Inventory ===")
+    print("\n=== Current Inventory ===")
     current_inventory(my_dict)
 
-    print(f"\n=== Inventory Statistics ===")
+    print("\n=== Inventory Statistics ===")
     inventory_statics(my_dict)
 
     print("\n=== Item Categories ===")

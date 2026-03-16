@@ -6,7 +6,8 @@ print("=== Player Score Analytics ===")
 def fun() -> None:
     if len(sys.argv) == 1:
         print(
-            "No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+            "No scores provided. Usage: python3"
+            "ft_score_analytics.py <score1> <score2> ...")
         return
     my_list = sys.argv[1:]
     i = 0
@@ -26,7 +27,5 @@ def fun() -> None:
     print(f"Score range: {max(my_list) - min(my_list)}")
 
 
-# my_list = {int(arg) for arg in my_list}
-# print(type(my_list))
 if __name__ == "__main__":
     fun()

@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-
-import sys
 import math
 
 
@@ -32,7 +30,7 @@ def fun(positions: tuple | str) -> None:
     else:
         print(f"Position created: {positions}")
 #    print(positions)
-    result = math.sqrt((x - x1) ** 2 + (y - y1) ** 2 + (z - z1 ** 2))
+    result = math.sqrt((x - x1) ** 2 + (y - y1) ** 2 + (z - z1) ** 2)
     print(f"Distance between {starting} and {positions}: {result:.2f}\n")
 
 
@@ -48,7 +46,8 @@ def testing() -> None:
     Invalid_coordinations = "abc,def,ghi"
     fun(Invalid_coordinations)
 
-    x, y, z = tup1 = (3, 4, 0)
+    tup1 = (3, 4, 0)
+    x, y, z = tup1
     print("\nUnpacking demonstration:")
     print(f"Player at x={x}, y={y}, z={z}")
     print(f"Coordinates: X={x}, Y={y}, Z={z}")
