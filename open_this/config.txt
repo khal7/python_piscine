@@ -1,0 +1,10 @@
+WIDTH=19
+HEIGHT=19
+ENTRY=0,0
+EXIT=18,17
+OUTPUT_FILE=maze.txt
+#SEED=4
+PERFECT=true
+
+# if there is a seed the maze will be the same every generating
+# if the perfect is false the maze will have multiple paths
