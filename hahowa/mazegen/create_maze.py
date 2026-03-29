@@ -192,7 +192,27 @@ class MazeGenerator:
 
         return not_visited_neighbors
 
-    def generate(self, seed: int) -> None:
+    def generate(self, seed: int | None) -> None:
+        """Generate the maze using a depth-first search backtracking algorithm.
+
+        The generation starts from the entry cell. It marks the starting cell
+        as visited, then repeatedly moves to a random unvisited neighbor,
+        removes the wall between the current cell and the chosen neighbor,
+        and pushes the neighbor onto the stack.
+
+        If the current cell has no unvisited neighbors, the algorithm
+        backtracks by popping the stack until it finds a cell with an
+        available unvisited neighbor.
+
+        If a seed is provided, the maze generation becomes reproducible.
+        If no seed is provided, a random seed is used.
+
+        Args:
+            seed: The random seed used to control maze generation.
+
+        Returns:
+            None
+        """
         if seed is not None:
             random.seed(seed)
         else:
@@ -212,37 +232,6 @@ class MazeGenerator:
                 stack.append(next_cel)
             else:
                 stack.pop()
-
-    # def generate(self, seed: int) -> None:
-    #     # reset all cells first
-    #     for row in self.grid:
-    #         for cell in row:
-    #             cell.visited = False
-    #             cell.north = True
-    #             cell.east = True
-    #             cell.south = True
-    #             cell.west = True
-    #             cell.is_pattern = False
-
-    #     # re-apply 42 pattern
-    #     self.pattern_42()
-    #     if seed is not None:
-    #         random.seed(seed)
-    #     else:
-    #         random.seed()
-    #     start_cel = self.get_cell(self.entry_pos[1], self.entry_pos[0])
-    #     start_cel.visited = True
-    #     stack = [start_cel]
-    #     while stack:
-    #         curr_cel = stack[-1]
-    #         neighbr = self.not_visited_neighbors(curr_cel)
-    #         if neighbr:
-    #             _, next_cel = random.choice(neighbr)
-    #             self.remove_wall_between(curr_cel, next_cel)
-    #             next_cel.visited = True
-    #             stack.append(next_cel)
-    #         else:
-    #             stack.pop()
 
     def cell_to_hex(self, cell: Cell) -> str:
         """
@@ -333,34 +322,12 @@ class MazeGenerator:
             short_path = self.get_directions(self.shortest_path())
             file.write(short_path + "\n")
 
-    # def pattern_42(self) -> None:
-    #     """
-    #     Check if the maze is large enough to fit the '42' pattern.
-    #     If yes, mark the pattern cells as visited so walls remain closed.
-    #     If not, print an error message on the console.
-    #     """
-    #     if self.width < 9 or self.height < 7:
-    #         print("Error: Maze too small to generate the '42' pattern.")
-    #         return
-
-    #     start_row = (self.height - 5) // 2
-    #     start_col = (self.width - 7) // 2
-
-    #     pattern = [
-    #         [1, 0, 1, 0, 1, 1, 1],
-    #         [1, 0, 1, 0, 0, 0, 1],
-    #         [1, 1, 1, 0, 1, 1, 1],
-    #         [0, 0, 1, 0, 1, 0, 0],
-    #         [0, 0, 1, 0, 1, 1, 1],
-    #     ]
-
-    #     for r in range(5):
-    #         for c in range(7):
-    #             if pattern[r][c] == 1:
-    #                 cell = self.get_cell(start_row + r, start_col + c)
-    #                 cell.visited = True
-    #                 cell.is_pattern = True
     def pattern_42(self) -> None:
+        """
+        Check if the maze is large enough to fit the '42' pattern.
+        If yes, mark the pattern cells as visited so walls remain closed.
+        If not, print an error message on the console.
+        """
         if self.width < 9 or self.height < 7:
             print("Error: Maze too small to generate the '42' pattern.")
             return
@@ -376,8 +343,8 @@ class MazeGenerator:
             [0, 0, 1, 0, 1, 1, 1],
         ]
 
-        entry_cell = (self.entry_pos[1], self.entry_pos[0])  # row, col
-        exit_cell = (self.exit_pos[1], self.exit_pos[0])     # row, col
+        entry_cell = (self.entry_pos[1], self.entry_pos[0])
+        exit_cell = (self.exit_pos[1], self.exit_pos[0])
 
         for r in range(5):
             for c in range(7):
@@ -393,6 +360,18 @@ class MazeGenerator:
                     cell.is_pattern = True
 
     def get_directions(self, path: list) -> str:
+        """Convert a path of cell coordinates into movement directions.
+
+        This method compares each cell in the path with the next one and
+        builds a string representing the movement directions:
+        N for north, S for south, E for east, and W for west.
+
+        Args:
+            path: A list of cell coordinates representing the path.
+
+        Returns:
+        A string of directions. Returns an empty string if the path is empty.
+        """
         if not path:
             return ""
 
@@ -412,72 +391,31 @@ class MazeGenerator:
 
         return directions
 
-    # def shortest_path(self) -> list[tuple]:
-    #     """
-    #     Find the shortest path from entry to exit using BFS.
-    #     Returns a string of directions (N, E, S, W).
-    #     """
-    #     start = self.entry_pos
-    #     exit_ = self.exit_pos
-    #     queue = deque([start])
-    #     visited = set([start])
-    #     parent: dict = {}
-
-    #     while queue:
-    #         curr_row, curr_col = queue.popleft()
-    #         curr_cell = self.get_cell(curr_row, curr_col)
-
-    #         if (curr_row, curr_col) == exit_:
-    #             path = []
-    #             current = exit_
-
-    #             while current != start:
-    #                 path.append(current)
-    #                 current = parent[current]
-
-    #             path.append(start)
-    #             path.reverse()
-    #             return path
-
-    #         if not curr_cell.north:
-    #             nr, nc = curr_row - 1, curr_col
-    #             if self.is_in_bounds(nr, nc) and (nr, nc) not in visited:
-    #                 queue.append((nr, nc))
-    #                 visited.add((nr, nc))
-    #                 parent[(nr, nc)] = (curr_row, curr_col)
-
-    #         if not curr_cell.south:
-    #             nr, nc = curr_row + 1, curr_col
-    #             if self.is_in_bounds(nr, nc) and (nr, nc) not in visited:
-    #                 queue.append((nr, nc))
-    #                 visited.add((nr, nc))
-    #                 parent[(nr, nc)] = (curr_row, curr_col)
-
-    #         if not curr_cell.east:
-    #             nr, nc = curr_row, curr_col + 1
-    #             if self.is_in_bounds(nr, nc) and (nr, nc) not in visited:
-    #                 queue.append((nr, nc))
-    #                 visited.add((nr, nc))
-    #                 parent[(nr, nc)] = (curr_row, curr_col)
-
-    #         if not curr_cell.west:
-    #             nr, nc = curr_row, curr_col - 1
-    #             if self.is_in_bounds(nr, nc) and (nr, nc) not in visited:
-    #                 queue.append((nr, nc))
-    #                 visited.add((nr, nc))
-    #                 parent[(nr, nc)] = (curr_row, curr_col)
-
-    #     return []
     def shortest_path(self) -> list[tuple[int, int]]:
+        """
+        Find the shortest path from the maze entry to the maze exit
+        using Breadth-First Search (BFS).
+
+        The entry and exit positions are stored as (x, y) coordinates,
+        then converted to (row, col) format to match the maze grid.
+        The algorithm explores all reachable neighboring cells level by level,
+        avoids revisiting cells, and stores each cell's parent to rebuild
+        the path once the exit is found.
+
+        Returns:
+            A list of (row, col) coordinates representing the shortest path
+            from entry to exit, including both start and end cells.
+            Returns an empty list if no path is found.
+        """
         start_x, start_y = self.entry_pos
         exit_x, exit_y = self.exit_pos
 
-        start = (start_y, start_x)   # row, col
-        exit_ = (exit_y, exit_x)     # row, col
+        start = (start_y, start_x)
+        exit_ = (exit_y, exit_x)
 
         queue = deque([start])
         visited = {start}
-        parent: dict[tuple[int, int], tuple[int, int]] = {}
+        parent: dict = {}
 
         while queue:
             curr_row, curr_col = queue.popleft()
@@ -526,9 +464,17 @@ class MazeGenerator:
         return []
 
     def not_perfect(self) -> None:
-        """
-        Break random internal walls to create loops,
-        making the maze imperfect.
+        """Make the maze imperfect by breaking random internal walls.
+
+        This method removes a number of existing internal walls to create
+        loops and allow multiple possible paths in the maze. It randomly
+        selects cells and directions, then breaks the wall only if the wall
+        exists and the neighboring cell is not part of the protected pattern.
+
+        The number of walls to break is based on the maze size.
+
+        Returns:
+            None
         """
         numb_of_wal_break = (self.width * self.height) // 10
         broke_wal = 0

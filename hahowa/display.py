@@ -1,10 +1,9 @@
-from mlx import Mlx  # type: ignore
+from mlx import Mlx
 import random
 import time
 from mazegen import MazeGenerator
-# Constants stay outside the class — they never change
 ANIM_STEPS = 30
-CELL_SIZE = 60
+CELL_SIZE = 40
 WALL_COLORS = [0xFFFFFFFF, 0xFF0000FF, 0xFF00FF00, 0xFFFF0000]
 MARGIN = 100
 
@@ -17,11 +16,7 @@ class MazeDisplay:
             maze: MazeGenerator,
             config: dict
     ) -> None:
-        """Initialize the display window and load the maze file.
 
-        Args:
-            maze_file: Path to the hex maze output file.
-        """
         # MLX setup
         self.mlx = Mlx()
         self.mlx_ptr = self.mlx.mlx_init()
@@ -81,10 +76,6 @@ class MazeDisplay:
         """Start the animation and enter the MLX event loop."""
         self.redraw_grid(self.anim_grid)
         self.mlx.mlx_loop(self.mlx_ptr)
-
-    # -------------------------------------------------------------------------
-    # Drawing methods
-    # -------------------------------------------------------------------------
 
     def fill_background(self, color: int) -> None:
         """Fill the entire image buffer with a single color.

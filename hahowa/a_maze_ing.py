@@ -3,7 +3,7 @@ from mazegen import MazeGenerator, read_config, process_config, validate_config
 from display import MazeDisplay
 
 
-def main():
+def main() -> None:
     """
     Run the full maze generation workflow.
 
