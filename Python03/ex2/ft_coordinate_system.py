@@ -29,7 +29,6 @@ def fun(positions: tuple | str) -> None:
         print(f"Parsed position: {positions}")
     else:
         print(f"Position created: {positions}")
-#    print(positions)
     result = math.sqrt((x - x1) ** 2 + (y - y1) ** 2 + (z - z1) ** 2)
     print(f"Distance between {starting} and {positions}: {result:.2f}\n")
 

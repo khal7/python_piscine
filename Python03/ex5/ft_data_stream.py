@@ -86,3 +86,14 @@ if __name__ == "__main__":
     print("\n=== Generator Demonstration ===")
     fibo(10)
     prime(5)
+
+
+# # what the for loop is ACTUALLY doing under the hood
+# gen = count_up()
+
+# while True:
+#     try:
+#         number = next(gen)   # ask for next value
+#         print(number)        # your loop body
+#     except StopIteration:    # generator ran out
+#         break

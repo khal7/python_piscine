@@ -2,50 +2,37 @@ import sys
 
 
 def current_inventory(ft_dict: dict) -> None:
-
-    pairs = list(ft_dict.items())
-    while pairs:
-        max_pair = pairs[0]
-        for pair in pairs:
-            if pair[1] > max_pair[1]:
-                max_pair = pair
+    sum_off_all = sum(ft_dict.values())
+    while ft_dict:
+        max_key = max(ft_dict, key=ft_dict.get)
+        max_value = ft_dict[max_key]
         try:
-            percentage = (max_pair[1] / sum(ft_dict.values()) * 100)
+            percentage = (max_value / sum_off_all) * 100
         except TypeError as e:
             print(e)
-        if max_pair[1] == 1:
-            print(
-                f"{max_pair[0]}, {max_pair[1]} unite ({percentage:.1f}%)")
-        else:
-            print(
-                f"{max_pair[0]}, {max_pair[1]} unites ({percentage:.1f}%)")
-        pairs.remove(max_pair)
+        print(
+            f"{max_key}: {max_value} unite ({percentage:.1f}%)")
+        ft_dict.pop(max_key)
 
 
 def inventory_statics(ft_dict) -> None:
 
-    max_value = max(ft_dict.values())
-    for key, value in ft_dict.items():
-        if value == max_value:
-            print(f"Most abundant: {key} ({value} unites)")
-            break
+    max_key = max(ft_dict, key=ft_dict.get)
+    max_value = ft_dict[max_key]
+    print(f"Most abundant: {max_key} ({max_value} units)")
 
-    min_value = min(ft_dict.values())
-    for key, value, in ft_dict.items():
-        if value == min_value:
-            print(f"Least abundant: {key} ({value} unit)")
-            break
+    max_key = min(ft_dict, key=ft_dict.get)
+    max_value = ft_dict[max_key]
+    print(f"Least abundant: {max_key} ({max_value} units)")
 
 
 def item_categories(ft_dict: dict) -> None:
-    ft_copy = ft_dict.copy()
-    max_value = max(ft_dict.values())
-    for key, value in ft_copy.items():
-        if value == max_value:
-            print(f"Moderate: {key, value})")
-            del ft_copy[key]
-            print(f"Scarce: {ft_copy}")
-            break
+    max_key = max(ft_dict, key=ft_dict.get)
+    max_value = ft_dict[max_key]
+    d = {max_key, max_value}
+    print(f"Moderate: {d} ")
+    ft_dict.pop(max_key)
+    print(f"Scare: {ft_dict}")
 
 
 def restock_needed(ft_dict: dict) -> None:
@@ -88,13 +75,15 @@ def fun() -> None:
     print(f"Unique item types: {len(my_dict.items())}")
 
     print("\n=== Current Inventory ===")
-    current_inventory(my_dict)
+    my_dict1 = my_dict.copy()
+    current_inventory(my_dict1)
 
     print("\n=== Inventory Statistics ===")
     inventory_statics(my_dict)
 
     print("\n=== Item Categories ===")
-    item_categories(my_dict)
+    my_dict2 = my_dict.copy()
+    item_categories(my_dict2)
 
     print("\n=== Management Suggestions ===")
     restock_needed(my_dict)
@@ -103,8 +92,6 @@ def fun() -> None:
     dict_proporties(my_dict)
     key = 'sword'
     print(f"Sample lookup - '{key}' in inventory: {key in my_dict}")
-
-    # print(my_dict)
 
 
 if __name__ == "__main__":
