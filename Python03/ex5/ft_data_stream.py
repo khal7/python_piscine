@@ -12,7 +12,7 @@ def event_generator(n: int) -> Generator:
                levels[(i - 1) % len(players)], action[(i - 1) % 3])
 
 
-def fibo_generator(n) -> Generator:
+def fibo_generator(n: int) -> Generator:
 
     old = 0
     new = 1
@@ -21,7 +21,7 @@ def fibo_generator(n) -> Generator:
         old, new = new, old + new
 
 
-def fibo(n) -> None:
+def fibo(n: int) -> None:
     print(f"Fibonacci sequence (first {n}): {0}", end=', ')
     count = 0
     for num in fibo_generator(n):
@@ -47,7 +47,7 @@ def prime_generator(n: int) -> Generator:
         i += 1
 
 
-def prime(n):
+def prime(n: int) -> None:
     count = 0
     print(f"Prime numbers (first {n}): ", end='')
     for prime in prime_generator(n):

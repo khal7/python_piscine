@@ -21,7 +21,9 @@ def fun() -> None:
     print(f"Total unique achievements: {len(combined_sets)}\n")
 
     print(
-        f"Common to all players: {set.intersection(alice_achievements, bob_achievements, charlie_achievements)}")
+        f"Common to all players: {set.intersection(
+            alice_achievements,
+            bob_achievements, charlie_achievements)}")
 
     alice = set.difference(
         alice_achievements, bob_achievements, charlie_achievements)
@@ -32,11 +34,14 @@ def fun() -> None:
     print(
         f"Rare achievments (1 player): {set.union(alice, bob, charle)}")
     print(
-        f"\nAlice vs Bob common: {set.intersection(alice_achievements, bob_achievements)}")
+        f"\nAlice vs Bob common: {set.intersection(alice_achievements,
+                                                   bob_achievements)}")
     print(
-        f"Alice unique: {set.difference(alice_achievements, bob_achievements)}")
+        f"Alice unique: {set.difference(alice_achievements,
+                                        bob_achievements)}")
     print(
-        f"Bob unique: {set.difference(bob_achievements, alice_achievements)}")
+        f"Bob unique: {set.difference(bob_achievements,
+                                      alice_achievements)}")
 
 
 if __name__ == "__main__":

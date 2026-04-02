@@ -37,7 +37,6 @@ def dict_comprehension() -> int:
                'charlie_ach': {'hunter', 'killer',
                                'sniper', 'level_up', 'attendee',
                                'attendee', 'zombie_killer', 'alumni'}}
-    # len(player['alice_ach'])
 
     score_categ = {'high': 3, 'medium': 2, 'low': 1}
     for player in players:

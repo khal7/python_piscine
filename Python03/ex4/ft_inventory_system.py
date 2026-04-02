@@ -11,7 +11,7 @@ def current_inventory(ft_dict: dict) -> None:
         except TypeError as e:
             print(e)
         print(
-            f"{max_key}: {max_value} unite ({percentage:.1f}%)")
+            f"{max_key}: {max_value} unites ({percentage:.1f}%)")
         ft_dict.pop(max_key)
 
 
@@ -23,23 +23,28 @@ def inventory_statics(ft_dict) -> None:
 
     max_key = min(ft_dict, key=ft_dict.get)
     max_value = ft_dict[max_key]
-    print(f"Least abundant: {max_key} ({max_value} units)")
+    print(f"Least abundant: {max_key} ({max_value} unit)")
 
 
 def item_categories(ft_dict: dict) -> None:
-    max_key = max(ft_dict, key=ft_dict.get)
-    max_value = ft_dict[max_key]
-    d = {max_key, max_value}
-    print(f"Moderate: {d} ")
-    ft_dict.pop(max_key)
-    print(f"Scare: {ft_dict}")
+    categories = {
+        'Moderate': {},
+        'Scarce': {}
+    }
+    for item in ft_dict:
+        if ft_dict[item] >= 5:
+            categories["Moderate"].update({item: ft_dict[item]})
+        else:
+            categories["Scarce"].update({item: ft_dict[item]})
+    print(f"Moderate: {categories['Moderate']}")
+    print(f"Scarce: {categories['Scarce']}")
 
 
 def restock_needed(ft_dict: dict) -> None:
 
     restock = []
     for key, value, in ft_dict.items():
-        if value == 1:
+        if value <= 1:
             restock.append(key)
 
     print(f"Restock needed: {', '.join(restock)}")
