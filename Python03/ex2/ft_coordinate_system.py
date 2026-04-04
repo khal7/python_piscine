@@ -16,7 +16,6 @@ def fun(positions: tuple | str) -> None:
             i += 1
     except AttributeError:
         flag = 0
-        pass
     except ValueError as e:
         print(f"Parsing invalid coordinates: \"{string_coordinat}\"")
         print(f"Error prsing coordinates: {e}")

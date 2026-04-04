@@ -76,8 +76,12 @@ def fun() -> None:
         except ValueError as e:
             print(e)
             return
-    print(f"Total items in inventory: {sum(my_dict.values())}")
-    print(f"Unique item types: {len(my_dict.items())}")
+    try:
+        print(f"Total items in inventory: {sum(my_dict.values())}")
+        print(f"Unique item types: {len(my_dict.items())}")
+    except TypeError as e:
+        print(e)
+        return
 
     print("\n=== Current Inventory ===")
     my_dict1 = my_dict.copy()

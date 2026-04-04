@@ -16,7 +16,7 @@ def fun() -> None:
             my_list[i] = int(arg)
             i += 1
         except ValueError:
-            print(f"oops, I typed {arg} instead of 1000")
+            print(f"oops, I typed {arg} instead of number")
             return
     print(f"Scores processed: {my_list}")
     print(f"Total players: {len(my_list)}")

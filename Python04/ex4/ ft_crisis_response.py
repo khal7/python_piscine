@@ -13,7 +13,7 @@ except FileNotFoundError:
     print("STATUS: Crisis handled, system stable\n")
 
 try:
-    print(f"CRISIS ALERT: Attempting access to 'classified_vault.txt'...")
+    print("CRISIS ALERT: Attempting access to 'classified_vault.txt'...")
     with open('classified_vault.txt', 'r') as file:
         print(file.read())
 except PermissionError:
