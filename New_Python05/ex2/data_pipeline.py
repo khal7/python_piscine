@@ -114,6 +114,12 @@ class LogProcessor(DataProcessor):
             raise TypeError("Got exception: Improper dict data")
 
 
+class ExportPlugin(Protocol):
+
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        ...
+
+
 class DataStream():
     def __init__(self):
         self.workers = []
@@ -131,7 +137,8 @@ class DataStream():
                     break
             if not flag:
                 print(
-                    f"DataStream error - Can't process element in stream: {item}")
+                    f"DataStream error - Can't process "
+                    f"element in stream: {item}")
 
     def print_processors_stats(self) -> None:
         if not self.workers:
@@ -139,16 +146,80 @@ class DataStream():
         else:
             for worker in self.workers:
                 print(
-                    f"{worker}: total {worker.total} items processed, remaining {len(worker.stack)} on processor")
+                    f"{worker}: total {worker.total} items processed,"
+                    f"remaining {len(worker.stack)} on processor")
+
+    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        all_data = []
+
+        for worker in self.workers:
+            for _ in range(nb):
+                try:
+                    data = worker.output()
+                    all_data.append(data)
+                except IndexError:
+                    break
+            plugin.process_output(all_data)
+            all_data = []
 
 
-class ExportPlugin(Protocol):
-    ...
+class CSVPlugin:
+    def __init__(self):
+        pass
 
-
-class CVSPlugin:
-    ...
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        print("CSV Output:")
+        values = [value for rank, value in data]
+        print(','.join(values))
 
 
 class JSONPlugin:
-    ...
+    def __init__(self):
+        pass
+
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        print("JSON Output:")
+        my_dict = {f"item_{rank}": value for rank, value in data}
+        print(my_dict)
+
+
+if __name__ == "__main__":
+    print("=== Code Nexus - Data Pipeline ===\n")
+    print("Initialize Data Stream...\n")
+    print("== DataStream statistics ==")
+    data_stream = DataStream()
+    data_stream.print_processors_stats()
+    print("\nRegistering Processors")
+    numeric = NumericProcessor()
+    text = TextProcessor()
+    log = LogProcessor()
+    data_stream.register_processor(numeric)
+    data_stream.register_processor(text)
+    data_stream.register_processor(log)
+    batch = ['Hello world', [3.14, -1, 2.71],
+             [{'log_level': 'WARNING', 'log_message':
+               'Telnet access! Use ssh instead'},
+              {'log_level': 'INFO', 'log_message': 'User wil is connected'}],
+             42, ['Hi', 'five']]
+    print(f"\nSend first batch of data on stream: {batch}")
+    data_stream.process_stream(batch)
+    print("\n== DataStream statistics ==")
+    data_stream.print_processors_stats()
+
+    print("\nSend 3 processed data from each processor to a CSV plugin:")
+    data_stream.output_pipeline(3, CSVPlugin())
+    print("\n== DataStream statistics ==")
+    data_stream.print_processors_stats()
+    other_batch = [21, ['I love AI', 'LLMs are wonderful', 'Stay healthy'],
+                   [{'log_level': 'ERROR', 'log_message': '500 server crash'},
+                    {'log_level': 'NOTICE', 'log_message':
+                     'Certificateexpires in 10 days'}],
+                   [32, 42, 64, 84, 128, 168], 'World hello']
+    print(f"\nSend another batch of data: {other_batch}")
+    data_stream.process_stream(other_batch)
+    print("\n== DataStream statistics ==")
+    data_stream.print_processors_stats()
+    print("\nSend 5 processed data from each processor to a JSON plugin:")
+    data_stream.output_pipeline(5, JSONPlugin())
+    print("\n== DataStream statistics ==")
+    data_stream.print_processors_stats()

@@ -131,7 +131,8 @@ class DataStream():
                     break
             if not flag:
                 print(
-                    f"DataStream error - Can't process element in stream: {item}")
+                    f"DataStream error - Can't process"
+                    f"element in stream: {item}")
 
     def print_processors_stats(self) -> None:
         if not self.workers:
@@ -139,7 +140,8 @@ class DataStream():
         else:
             for worker in self.workers:
                 print(
-                    f"{worker}: total {worker.total} items processed, remaining {len(worker.stack)} on processor")
+                    f"{worker}: total {worker.total} items \
+                    processed, remaining {len(worker.stack)} on processor")
 
 
 if __name__ == "__main__":
@@ -153,8 +155,11 @@ if __name__ == "__main__":
     print("\nRegistering Numeric Processor\n")
     numeric = NumericProcessor()
     data_stream.register_processor(numeric)
-    batch = ['Hello world', [3.14, -1, 2.71], [{'log_level': 'WARNING', 'log_message': 'Telnet access! Use ssh instead'}, {
-        'log_level': 'INFO', 'log_message': 'User wil is connected'}], 42, ['Hi', 'five']]
+    batch = ['Hello world', [3.14, -1, 2.71],
+             [{'log_level': 'WARNING', 'log_message':
+               'Telnet access! Use ssh instead'}, {
+                 'log_level': 'INFO', 'log_message': 'User wil is connected'}],
+             42, ['Hi', 'five']]
     print(f"Send first batch of data on stream: {batch}")
     data_stream.process_stream(batch)
 
@@ -169,7 +174,8 @@ if __name__ == "__main__":
     data_stream.process_stream(batch)
     print("== DataStream statistics ==")
     data_stream.print_processors_stats()
-    print("\nConsume some elements from the data processors: Numeric 3, Text 2, Log 1")
+    print("\nConsume some elements from the data processors: "
+          "Numeric 3, Text 2, Log 1")
     for _ in range(3):
         numeric.output()
     for _ in range(2):
