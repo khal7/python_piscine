@@ -47,7 +47,8 @@ class Bloomelle(Creature, HealCapability):
 
 # this creates healing creatures which are the Sproutling and bloomelle
 class HealingCreatureFactory(CreatureFactory):
-
+    def __init__(self):
+        self.name = "Healing"
     def create_base(self) -> Creature:
         return Sproutling()
 
@@ -104,6 +105,8 @@ class Morphagon(Creature, TransformCapability):
 
 # this can create creatures
 class TransformCreatureFactory(CreatureFactory):
+    def __init__(self):
+        self.name = "Transform"
 
     def create_base(self) -> Creature:
         return Shiftling()

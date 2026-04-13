@@ -11,7 +11,7 @@ class Creature(ABC):
         ...
 
     def describe(self) -> str:
-       return f"{self.name} is a {self.ft_type} type Creature" 
+        return f"{self.name} is a {self.ft_type} type Creature"
 
 
 class Flameling(Creature):
@@ -38,7 +38,6 @@ class Aquabub(Creature):
         return "Aquabub uses Water Gun!"
 
 
-
 class Torragon(Creature):
     def __init__(self):
         super().__init__("Torragon", "Water")
@@ -61,6 +60,7 @@ class CreatureFactory(ABC):
 class FlameFactory(CreatureFactory):
     def __init__(self):
         super().__init__()
+        self.name = "Flameling"
 
     def create_base(self) -> Creature:
         return Flameling()
@@ -72,7 +72,7 @@ class FlameFactory(CreatureFactory):
 class AquaFactory(CreatureFactory):
     def __init__(self):
         super().__init__()
-
+        self.name = "Aquabub"
     def create_base(self) -> Creature:
         return Aquabub()
 
