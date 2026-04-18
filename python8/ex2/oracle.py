@@ -10,20 +10,33 @@ for key in keys:
     value = os.getenv(key)
     if value is None:
         print(f"[FAIL] {key} not found!")
-        exit()
+        sys.exit()
+
+# dev mode testing th eapp locally
+# production mode real app real user are using
 MATRIX_MODE = os.getenv('MATRIX_MODE')
 DATABASE_URL = os.getenv('DATABASE_URL')
 API_KEY = os.getenv('API_KEY')
 LOG_LEVEL = os.getenv('LOG_LEVEL')
 ZION_ENDPOINT = os.getenv('ZION_ENDPOINT')
 
-print("\nORACLE STATUS: Reading the Matrix...")
-print(f"\nConfiguration loaded:")
-print(f"Mode: {MATRIX_MODE}")
-print(f"Database: {DATABASE_URL}")
-print(f"API Access: Authenticated")
-print(f"Log Level: {LOG_LEVEL}")
-print(f"Zion Network: Online")
+if MATRIX_MODE == "production":
+    print("\nORACLE STATUS: Reading the Matrix...")
+    print("\nConfiguration loaded:")
+    print(f"Mode: {MATRIX_MODE}")
+    print("Database: Connected to remote instance")
+    print("API Access: Authenticated")
+    print(f"Log Level: {LOG_LEVEL}")
+    print("Zion Network: Online")
+else:
+    print("\nORACLE STATUS: Reading the Matrix...")
+    print("\nConfiguration loaded:")
+    print(f"Mode: {MATRIX_MODE}")
+    print("Database: Connected to local instance")
+    print("API Access: Authenticated")
+    print(f"Log Level: {LOG_LEVEL}")
+    print("Zion Network: Online")
+
 
 print("\nEnvironment security check:")
 print("[OK] No hardcoded secrets detected")
