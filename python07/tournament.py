@@ -1,25 +1,24 @@
-from ex0 import FlameFactory, AquaFactory, CreatureFactory
+from ex0 import FlameFactory, AquaFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
 from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy
 
 
 def single_battle(opponents: list[tuple]) -> None:
-    #print(opponents)
-    display = ", ".join(f"({factory.name}+{strategy.name})" for factory, strategy in opponents) 
+    # print(opponents)
+    display = ", ".join(
+        f"({factory.name}+{strategy.name})" for factory, strategy in opponents)
     print(f"[ {display} ]")
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
-
 
     for i in range(len(opponents)):
         for j in range(i + 1, len(opponents)):
             print("\n* Battle *")
             factory, strategy = opponents[i]
             factory1, strategy1 = opponents[j]
-            
+
             rival = factory.create_base()
             rival1 = factory1.create_base()
-    
 
             print(rival.describe())
             print(" vs.")
@@ -33,8 +32,6 @@ def single_battle(opponents: list[tuple]) -> None:
                 return
 
 
-
-
 if __name__ == "__main__":
 
     flame_factory = FlameFactory()
@@ -46,25 +43,23 @@ if __name__ == "__main__":
     defensive_strategy = DefensiveStrategy()
     aggressive_strategy = AggressiveStrategy()
 
-    oppenetent1 = (flame_factory, normal_strategy)
+    oppenetent = (flame_factory, normal_strategy)
     oppenetent2 = (healing_factory, defensive_strategy)
-    battle_list = [oppenetent1, oppenetent2]
+    battle_list = [oppenetent, oppenetent2]
     print("Tournament 0 (basic)")
     single_battle(battle_list)
     print("\nTournament 1 (error)")
 
     oppenetent1 = (flame_factory, aggressive_strategy)
     oppenetent2 = (healing_factory, defensive_strategy)
-    battle_list = [oppenetent1, oppenetent2]
-    single_battle(battle_list)
+    battle_list1 = [oppenetent1, oppenetent2]
+    single_battle(battle_list1)
     print("\nTournament 2 (multiple)")
 
-    oppenetent1 = [aqua_factory, normal_strategy]
-    oppenetent2 = [healing_factory, defensive_strategy]
-    oppenetent3 = [transform_factory, aggressive_strategy]
+    opp1 = (aqua_factory, normal_strategy)
+    opp2 = (healing_factory, defensive_strategy)
+    opp3 = (transform_factory, aggressive_strategy)
 
-    single_battle([oppenetent1, oppenetent2, oppenetent3])
+    single_battle([opp1, opp2, opp3])
 
-
-    #print(battle_list)
-
+    # print(battle_list)

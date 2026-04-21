@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from ex0 import Creature, CreatureFactory
+from ex0 import Creature
 from ex1.package import HealCapability, TransformCapability
 
 
@@ -28,16 +28,19 @@ class NormalStrategy(BattleStrategy):
 class AggressiveStrategy(BattleStrategy):
     def __init__(self):
         self.name = "Aggressive"
+
     def is_valid(self, creature: Creature) -> bool:
         return isinstance(creature, TransformCapability)
 
     def act(self, creature: Creature):
         if not self.is_valid(creature):
-            raise ValueError(f"Invalid Creature '{creature.name}' for this aggressive strategy")
+            raise ValueError(
+                f"Invalid Creature '{creature.name}' "
+                "for this aggressive strategy")
         else:
-            print(creature.transform())
+            print(creature.transform())  # type: ignore
             print(creature.attack())
-            print(creature.revert())
+            print(creature.revert())  # type: ignore
 
 
 class DefensiveStrategy(BattleStrategy):
@@ -49,7 +52,9 @@ class DefensiveStrategy(BattleStrategy):
 
     def act(self, creature: Creature):
         if not self.is_valid(creature):
-            raise ValueError(f"Invalid Creature '{creature.name}' for this defensive strategy")
+            raise ValueError(
+                f"Invalid Creature '{creature.name}' "
+                "for this defensive strategy")
         else:
             print(creature.attack())
-            print(creature.heal())
+            print(creature.heal())  # type: ignore

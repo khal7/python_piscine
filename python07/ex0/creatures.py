@@ -73,6 +73,7 @@ class AquaFactory(CreatureFactory):
     def __init__(self):
         super().__init__()
         self.name = "Aquabub"
+
     def create_base(self) -> Creature:
         return Aquabub()
 

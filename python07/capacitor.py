@@ -5,15 +5,15 @@ from ex0 import Creature
 def test_healing_creatures(creature: Creature) -> None:
     print(creature.describe())
     print(creature.attack())
-    print(creature.heal())
+    print(creature.heal())  # type: ignore
 
 
 def test_transform_creatures(creature: Creature) -> None:
     print(creature.describe())
     print(creature.attack())
-    print(creature.transform())
+    print(creature.transform())  # type: ignore
     print(creature.attack())
-    print(creature.revert())
+    print(creature.revert())  # type: ignore
 
 
 if __name__ == "__main__":

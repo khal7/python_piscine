@@ -12,6 +12,7 @@ base_prefix = sys.base_prefix
 # so output depend on from where you run the script
 executable_path = sys.executable
 
+
 # extract the last parm of prefix so in returns the name of the venv
 venv_name = os.path.basename(prefix)
 

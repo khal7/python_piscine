@@ -10,10 +10,11 @@ def test_factory(factory: CreatureFactory) -> None:
     evolved_flame = factory.create_evolved()
     print(evolved_flame.describe())
     print(evolved_flame.attack())
-    #print("\n")
+    # print("\n")
+
 
 def battle(flame_factory: CreatureFactory, aqua_fact: CreatureFactory) -> None:
-    
+
     print("\nTesting battle")
     flame = flame_factory.create_base()
     aqua = aqua_fact.create_base()
@@ -27,7 +28,7 @@ if __name__ == "__main__":
     aqua_fact = AquaFactory()
 
     test_factory(flame_fact)
-    #print("\n")
+    # print("\n")
     test_factory(aqua_fact)
 
     battle(flame_fact, aqua_fact)
